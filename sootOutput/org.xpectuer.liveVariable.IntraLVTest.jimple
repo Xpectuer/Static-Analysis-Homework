@@ -1,0 +1,93 @@
+public class org.xpectuer.liveVariable.IntraLVTest extends org.xpectuer.IntraBaseTest
+{
+
+    public void <init>()
+    {
+        org.xpectuer.liveVariable.IntraLVTest this;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        specialinvoke this.<org.xpectuer.IntraBaseTest: void <init>()>();
+
+        return;
+    }
+
+    public java.util.List getProcessDirs()
+    {
+        java.lang.String[] $stack1;
+        java.util.List $stack2;
+        org.xpectuer.liveVariable.IntraLVTest this;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        $stack1 = newarray (java.lang.String)[1];
+
+        $stack1[0] = "target/test-classes/";
+
+        $stack2 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($stack1);
+
+        return $stack2;
+    }
+
+    public java.util.List getExcluded()
+    {
+        java.util.LinkedList $stack2, excluded;
+        org.xpectuer.liveVariable.IntraLVTest this;
+        java.util.List $stack3;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        $stack2 = new java.util.LinkedList;
+
+        $stack3 = specialinvoke this.<org.xpectuer.IntraBaseTest: java.util.List getExcluded()>();
+
+        specialinvoke $stack2.<java.util.LinkedList: void <init>(java.util.Collection)>($stack3);
+
+        excluded = $stack2;
+
+        interfaceinvoke excluded.<java.util.List: boolean add(java.lang.Object)>("ass2.*");
+
+        interfaceinvoke excluded.<java.util.List: boolean add(java.lang.Object)>("ass3.*");
+
+        interfaceinvoke excluded.<java.util.List: boolean add(java.lang.Object)>("ass4.*");
+
+        interfaceinvoke excluded.<java.util.List: boolean add(java.lang.Object)>("ass5.*");
+
+        return excluded;
+    }
+
+    public java.lang.String getPhaseNameOfPack()
+    {
+        org.xpectuer.liveVariable.IntraLVTest this;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        return "jtp";
+    }
+
+    public java.lang.String getPhaseNameOfTransformer()
+    {
+        org.xpectuer.liveVariable.IntraLVTest this;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        return "jtp.intra_lv";
+    }
+
+    public soot.Transformer getTransformer()
+    {
+        org.xpectuer.liveVariable.IntraLVTest this;
+        org.xpectuer.liveVariableAnalysis.IntraLVTransformer $u0;
+        soot.Transformer $r0;
+
+        this := @this: org.xpectuer.liveVariable.IntraLVTest;
+
+        $u0 = new org.xpectuer.liveVariableAnalysis.IntraLVTransformer;
+
+        specialinvoke $u0.<org.xpectuer.liveVariableAnalysis.IntraLVTransformer: void <init>()>();
+
+        $r0 = (soot.Transformer) $u0;
+
+        return $r0;
+    }
+}

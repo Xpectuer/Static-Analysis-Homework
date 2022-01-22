@@ -1,0 +1,98 @@
+public class IntraLVTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        IntraLVTest l0;
+
+        l0 := @this: IntraLVTest;
+
+        specialinvoke l0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public void nonDistributiveTest()
+    {
+        double $stack4;
+        byte $stack5, l1, l2;
+        int l3;
+        IntraLVTest l0;
+
+        l0 := @this: IntraLVTest;
+
+        $stack4 = staticinvoke <java.lang.Math: double random()>();
+
+        $stack5 = $stack4 cmpl 0.5;
+
+        if $stack5 <= 0 goto label1;
+
+        l1 = 1;
+
+        l2 = 9;
+
+        goto label2;
+
+     label1:
+        l1 = 9;
+
+        l2 = 1;
+
+     label2:
+        l3 = l1 + l2;
+
+        return;
+    }
+
+    public void sameValueMeetTest()
+    {
+        double $stack6;
+        byte $stack7, l1, l2;
+        int l3, l4, l5;
+        IntraLVTest l0;
+
+        l0 := @this: IntraLVTest;
+
+        $stack6 = staticinvoke <java.lang.Math: double random()>();
+
+        $stack7 = $stack6 cmpl 0.5;
+
+        if $stack7 <= 0 goto label1;
+
+        l1 = 1;
+
+        l2 = 2;
+
+        goto label2;
+
+     label1:
+        l1 = 1;
+
+        l2 = 1;
+
+     label2:
+        l3 = l1 + l2;
+
+        l4 = l1 + l1;
+
+        l5 = l2 + l2;
+
+        return;
+    }
+
+    public void testParam(int)
+    {
+        int l1, l2, l3;
+        IntraLVTest l0;
+
+        l0 := @this: IntraLVTest;
+
+        l1 := @parameter0: int;
+
+        l2 = l1;
+
+        l3 = l2;
+
+        return;
+    }
+}

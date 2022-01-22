@@ -1,0 +1,192 @@
+public abstract class org.xpectuer.IntraBaseTest extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        org.xpectuer.IntraBaseTest this;
+
+        this := @this: org.xpectuer.IntraBaseTest;
+
+        specialinvoke this.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public abstract java.util.List getProcessDirs();
+
+    public abstract java.lang.String getPhaseNameOfPack();
+
+    public abstract java.lang.String getPhaseNameOfTransformer();
+
+    public abstract soot.Transformer getTransformer();
+
+    public java.util.List getExcluded()
+    {
+        java.lang.String[] $stack1;
+        java.util.List $stack2;
+        org.xpectuer.IntraBaseTest this;
+
+        this := @this: org.xpectuer.IntraBaseTest;
+
+        $stack1 = newarray (java.lang.String)[1];
+
+        $stack1[0] = "com.canliture.*";
+
+        $stack2 = staticinvoke <java.util.Arrays: java.util.List asList(java.lang.Object[])>($stack1);
+
+        return $stack2;
+    }
+
+    public void initializeSoot()
+    {
+        soot.options.Options $stack1, $stack2, $stack3, $stack5, $stack6, $stack7, $stack9, $stack11, $stack12;
+        org.xpectuer.IntraBaseTest this;
+        java.util.List $stack4, $stack8;
+        soot.Scene $stack13;
+
+        this := @this: org.xpectuer.IntraBaseTest;
+
+        $stack1 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack1.<soot.options.Options: void set_whole_program(boolean)>(1);
+
+        $stack2 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack2.<soot.options.Options: void set_allow_phantom_refs(boolean)>(1);
+
+        $stack3 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack4 = virtualinvoke this.<org.xpectuer.IntraBaseTest: java.util.List getExcluded()>();
+
+        virtualinvoke $stack3.<soot.options.Options: void set_exclude(java.util.List)>($stack4);
+
+        $stack5 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack5.<soot.options.Options: void set_no_bodies_for_excluded(boolean)>(1);
+
+        $stack6 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack6.<soot.options.Options: void set_prepend_classpath(boolean)>(1);
+
+        $stack7 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        $stack8 = virtualinvoke this.<org.xpectuer.IntraBaseTest: java.util.List getProcessDirs()>();
+
+        virtualinvoke $stack7.<soot.options.Options: void set_process_dir(java.util.List)>($stack8);
+
+        $stack9 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack9.<soot.options.Options: boolean setPhaseOption(java.lang.String,java.lang.String)>("jb", "use-original-names:true");
+
+        $stack11 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack11.<soot.options.Options: void set_keep_line_number(boolean)>(1);
+
+        $stack12 = staticinvoke <soot.options.Options: soot.options.Options v()>();
+
+        virtualinvoke $stack12.<soot.options.Options: void set_output_format(int)>(1);
+
+        $stack13 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        virtualinvoke $stack13.<soot.Scene: void loadNecessaryClasses()>();
+
+        return;
+    }
+
+    public void test()
+    {
+        org.xpectuer.IntraBaseTest this;
+        java.lang.String packPhaseName, transformerPhaseName;
+        soot.Transformer transformer;
+        soot.Transform $stack13, transform;
+        soot.PackManager $stack14, $stack27;
+        soot.Pack $stack15, $stack28;
+        soot.Scene $stack16;
+        soot.util.Chain $stack17;
+        java.util.Iterator l5, l7;
+        boolean $stack19, $stack23;
+        java.lang.Object $stack20, $stack25;
+        soot.SootClass appClazz;
+        java.util.List $stack21;
+        soot.SootMethod method;
+        soot.Body body;
+
+        this := @this: org.xpectuer.IntraBaseTest;
+
+        packPhaseName = virtualinvoke this.<org.xpectuer.IntraBaseTest: java.lang.String getPhaseNameOfPack()>();
+
+        transformerPhaseName = virtualinvoke this.<org.xpectuer.IntraBaseTest: java.lang.String getPhaseNameOfTransformer()>();
+
+        transformer = virtualinvoke this.<org.xpectuer.IntraBaseTest: soot.Transformer getTransformer()>();
+
+        $stack13 = new soot.Transform;
+
+        specialinvoke $stack13.<soot.Transform: void <init>(java.lang.String,soot.Transformer)>(transformerPhaseName, transformer);
+
+        transform = $stack13;
+
+        $stack14 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $stack15 = virtualinvoke $stack14.<soot.PackManager: soot.Pack getPack(java.lang.String)>(packPhaseName);
+
+        virtualinvoke $stack15.<soot.Pack: void add(soot.Transform)>(transform);
+
+        $stack16 = staticinvoke <soot.Scene: soot.Scene v()>();
+
+        $stack17 = virtualinvoke $stack16.<soot.Scene: soot.util.Chain getApplicationClasses()>();
+
+        l5 = interfaceinvoke $stack17.<soot.util.Chain: java.util.Iterator iterator()>();
+
+     label1:
+        $stack19 = interfaceinvoke l5.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack19 == 0 goto label4;
+
+        $stack20 = interfaceinvoke l5.<java.util.Iterator: java.lang.Object next()>();
+
+        appClazz = (soot.SootClass) $stack20;
+
+        $stack21 = virtualinvoke appClazz.<soot.SootClass: java.util.List getMethods()>();
+
+        l7 = interfaceinvoke $stack21.<java.util.List: java.util.Iterator iterator()>();
+
+     label2:
+        $stack23 = interfaceinvoke l7.<java.util.Iterator: boolean hasNext()>();
+
+        if $stack23 == 0 goto label3;
+
+        $stack25 = interfaceinvoke l7.<java.util.Iterator: java.lang.Object next()>();
+
+        method = (soot.SootMethod) $stack25;
+
+        body = virtualinvoke method.<soot.SootMethod: soot.Body retrieveActiveBody()>();
+
+        $stack27 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        $stack28 = virtualinvoke $stack27.<soot.PackManager: soot.Pack getPack(java.lang.String)>(packPhaseName);
+
+        virtualinvoke $stack28.<soot.Pack: void apply(soot.Body)>(body);
+
+        goto label2;
+
+     label3:
+        goto label1;
+
+     label4:
+        return;
+    }
+
+    public void output()
+    {
+        soot.PackManager $stack1;
+        org.xpectuer.IntraBaseTest this;
+
+        this := @this: org.xpectuer.IntraBaseTest;
+
+        $stack1 = staticinvoke <soot.PackManager: soot.PackManager v()>();
+
+        virtualinvoke $stack1.<soot.PackManager: void writeOutput()>();
+
+        return;
+    }
+}

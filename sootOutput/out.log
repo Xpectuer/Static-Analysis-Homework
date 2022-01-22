@@ -1,0 +1,135 @@
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+____Method <init>____
+Before l0 := @this: IntraLVTest:[]
+After l0 := @this: IntraLVTest:[l0]
+==================================
+
+Before specialinvoke l0.<java.lang.Object: void <init>()>():[l0]
+After specialinvoke l0.<java.lang.Object: void <init>()>():[]
+==================================
+
+Before return:[]
+After return:[]
+==================================
+
+____Method nonDistributiveTest____
+Before l0 := @this: IntraLVTest:[]
+After l0 := @this: IntraLVTest:[]
+==================================
+
+Before $stack4 = staticinvoke <java.lang.Math: double random()>():[]
+After $stack4 = staticinvoke <java.lang.Math: double random()>():[$stack4]
+==================================
+
+Before $stack5 = $stack4 cmpl 0.5:[$stack4]
+After $stack5 = $stack4 cmpl 0.5:[$stack5]
+==================================
+
+Before if $stack5 <= 0 goto l1 = 9:[$stack5]
+After if $stack5 <= 0 goto l1 = 9:[]
+==================================
+
+Before l1 = 1:[]
+After l1 = 1:[]
+==================================
+
+Before l2 = 9:[]
+After l2 = 9:[]
+==================================
+
+Before goto [?= l3 = l1 + l2]:[]
+After goto [?= l3 = l1 + l2]:[l1, l2]
+==================================
+
+Before l1 = 9:[]
+After l1 = 9:[]
+==================================
+
+Before l2 = 1:[]
+After l2 = 1:[l1, l2]
+==================================
+
+Before l3 = l1 + l2:[l1, l2]
+After l3 = l1 + l2:[]
+==================================
+
+Before return:[]
+After return:[]
+==================================
+
+____Method sameValueMeetTest____
+Before l0 := @this: IntraLVTest:[]
+After l0 := @this: IntraLVTest:[]
+==================================
+
+Before $stack6 = staticinvoke <java.lang.Math: double random()>():[]
+After $stack6 = staticinvoke <java.lang.Math: double random()>():[$stack6]
+==================================
+
+Before $stack7 = $stack6 cmpl 0.5:[$stack6]
+After $stack7 = $stack6 cmpl 0.5:[$stack7]
+==================================
+
+Before if $stack7 <= 0 goto l1 = 1:[$stack7]
+After if $stack7 <= 0 goto l1 = 1:[]
+==================================
+
+Before l1 = 1:[]
+After l1 = 1:[]
+==================================
+
+Before l2 = 2:[]
+After l2 = 2:[]
+==================================
+
+Before goto [?= l3 = l1 + l2]:[]
+After goto [?= l3 = l1 + l2]:[l1, l2]
+==================================
+
+Before l1 = 1:[]
+After l1 = 1:[]
+==================================
+
+Before l2 = 1:[]
+After l2 = 1:[l1, l2]
+==================================
+
+Before l3 = l1 + l2:[l1, l2]
+After l3 = l1 + l2:[l1]
+==================================
+
+Before l4 = l1 + l1:[l1]
+After l4 = l1 + l1:[l2]
+==================================
+
+Before l5 = l2 + l2:[l2]
+After l5 = l2 + l2:[]
+==================================
+
+Before return:[]
+After return:[]
+==================================
+
+____Method testParam____
+Before l0 := @this: IntraLVTest:[]
+After l0 := @this: IntraLVTest:[]
+==================================
+
+Before l1 := @parameter0: int:[]
+After l1 := @parameter0: int:[l1]
+==================================
+
+Before l2 = l1:[l1]
+After l2 = l1:[l2]
+==================================
+
+Before l3 = l2:[l2]
+After l3 = l2:[]
+==================================
+
+Before return:[]
+After return:[]
+==================================
+
