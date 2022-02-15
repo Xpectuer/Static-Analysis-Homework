@@ -1,9 +1,10 @@
 package org.xpectuer.liveVariable;
 
 import org.xpectuer.IntraBaseTest;
-import org.xpectuer.liveVariableAnalysis.IntraLVTransformer;
+import org.xpectuer.configs.ResourceConfigHelper;
 import soot.Transformer;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,14 @@ public class IntraLVTest extends IntraBaseTest {
 
     @Override
     public List<String> getProcessDirs() {
-        return Collections.singletonList("/Users/alex/projects/java_proj/static_analysis_lab/flow_analysis/src/test/test-code/liveVariable");
+        String path = "";
+        try {
+            path = new ResourceConfigHelper().getPropertyValue("source_path");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return Collections.singletonList(path);
+
     }
 
     @Override

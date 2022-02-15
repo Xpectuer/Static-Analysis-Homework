@@ -1,4 +1,4 @@
-package org.xpectuer.liveVariableAnalysis;
+package org.xpectuer.liveVariable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,12 @@ public class IntraLVTransformer extends BodyTransformer {
 
         UnitGraph unitGraph = new BriefUnitGraph(body);
         LiveVariableAnalysis lv = new LiveVariableAnalysis(unitGraph);
-        System.out.print(String.format("____Method %s____\n",body.getMethod().getName()));
+        System.out.printf("____Method %s____\n", body.getMethod().getName());
         for(Unit unit :body.getUnits()) {
             logger.info(String.format("Before %s:%s",unit,lv.getFlowBefore(unit)));
             logger.info(String.format("After %s:%s",unit,lv.getFlowAfter(unit)));
             logger.info("==================================\n");
+
         }
     }
 }

@@ -1,9 +1,10 @@
-package org.xpectuer.ConstantPropagationAnalysis;
+package org.xpectuer.constantPropagation;
 
 import soot.Local;
 import soot.Unit;
 import soot.jimple.AssignStmt;
 import soot.toolkits.graph.DirectedGraph;
+import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.ForwardFlowAnalysis;
 
 import java.util.HashSet;
@@ -11,9 +12,24 @@ import java.util.Set;
 
 public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs> {
 
-    public ConstantPropagationAnalysis(DirectedGraph<Unit> graph) {
+    public ConstantPropagationAnalysis(UnitGraph graph) {
         super(graph);
         doAnalysis();
+    }
+
+    //TODO：before和after一样了
+
+    // make output readable
+    @Override
+    public Pairs getFlowAfter(Unit s) {
+        Pairs pairs = unitToAfterFlow.get(s);
+        return pairs == null ? newInitialFlow() : pairs;
+    }
+
+    @Override
+    public Pairs getFlowBefore(Unit s) {
+        Pairs pairs = unitToBeforeFlow.get(s);
+        return pairs == null ? newInitialFlow() : pairs;
     }
 
     @Override
@@ -27,12 +43,10 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
                 soot.Value rValue = as.getRightOp();
                 // interpret the right expression
                 LatticeValue rAbsLatticeValue = in.computeValue(rValue);
-
+                if (rAbsLatticeValue == null) rAbsLatticeValue = LatticeValue.undef;
                 out.put(defLocal, rAbsLatticeValue);
             }
-
         }
-
     }
 
     @Override
@@ -62,4 +76,6 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
         dest.clear();
         dest.putAll(src);
     }
+
+
 }

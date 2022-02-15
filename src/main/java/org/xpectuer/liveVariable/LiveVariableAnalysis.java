@@ -1,4 +1,4 @@
-package org.xpectuer.liveVariableAnalysis;
+package org.xpectuer.liveVariable;
 
 import soot.Local;
 import soot.Unit;

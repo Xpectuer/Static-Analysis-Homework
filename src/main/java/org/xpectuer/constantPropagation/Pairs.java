@@ -1,4 +1,4 @@
-package org.xpectuer.ConstantPropagationAnalysis;
+package org.xpectuer.constantPropagation;
 
 import soot.Local;
 import soot.jimple.*;
@@ -7,6 +7,22 @@ import java.util.HashMap;
 
 
 public class Pairs extends HashMap<Local, LatticeValue> {
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("{ ");
+        for (Entry<Local, LatticeValue> entry : this.entrySet()) {
+            LatticeValue latticeValue = entry.getValue();
+            sb.append("(");
+            sb.append(entry.getKey());
+            sb.append("->");
+            sb.append(latticeValue.toString());
+            sb.append(")");
+        }
+
+        sb.append(" }");
+        return sb.toString();
+    }
+
     public LatticeValue computeValue(soot.Value svalue) {
         if (svalue instanceof Local) { // local 变量：寻找变量的常量值
             return get((Local) svalue);

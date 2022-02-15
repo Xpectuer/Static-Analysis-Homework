@@ -1,16 +1,29 @@
 package org.xpectuer.CostantPropagation;
 
-import org.xpectuer.ConstantPropagationAnalysis.IntraCPTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xpectuer.constantPropagation.IntraCPTransformer;
 import org.xpectuer.IntraBaseTest;
+import org.xpectuer.configs.ResourceConfigHelper;
 import soot.Transformer;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 public class IntraCPTest extends IntraBaseTest {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public List<String> getProcessDirs() {
-        return Collections.singletonList("/Users/alex/projects/java_proj/static_analysis_lab/flow_analysis/src/test/test-code/constantPropagation");
+        List<String> result = Collections.singletonList("NIL");
+        try {
+            String str = new ResourceConfigHelper().getPropertyValue("source_path");
+            result = Collections.singletonList(str);
+        } catch (IOException ioe) {
+            logger.error(ioe.getMessage());
+        }
+        return result;
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.List;
  */
 public abstract class IntraBaseTest {
 
+
     public abstract List<String> getProcessDirs();
 
     public abstract String getPhaseNameOfPack();
@@ -63,10 +64,14 @@ public abstract class IntraBaseTest {
         // 只分析应用类
         for (SootClass appClazz : Scene.v().getApplicationClasses()) {
             for (SootMethod method : appClazz.getMethods()) {
-                Body body = method.retrieveActiveBody();
-                PackManager.v().getPack(packPhaseName).apply(body);
+                    Body body = method.retrieveActiveBody();
+                    PackManager.v().getPack(packPhaseName).apply(body);
             }
         }
+
+
+
+
     }
 
     @After

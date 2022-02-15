@@ -1,4 +1,4 @@
-package org.xpectuer.ConstantPropagationAnalysis;
+package org.xpectuer.constantPropagation;
 
 /**
  * only int type is considered

@@ -1,0 +1,34 @@
+____Method nonDistributiveTest____
+Before:[l0 := @this: IntraCPTest:{  }]
+After:[l0 := @this: IntraCPTest:{  }]
+================================
+Before:[$stack4 = staticinvoke <java.lang.Math: double random()>():{  }]
+After:[$stack4 = staticinvoke <java.lang.Math: double random()>():{ ($stack4->NAC) }]
+================================
+Before:[$stack5 = $stack4 cmpl 0.5:{ ($stack4->NAC) }]
+After:[$stack5 = $stack4 cmpl 0.5:{ ($stack5->NAC)($stack4->NAC) }]
+================================
+Before:[if $stack5 <= 0 goto l1 = 9:{ ($stack5->NAC)($stack4->NAC) }]
+After:[if $stack5 <= 0 goto l1 = 9:{ ($stack5->NAC)($stack4->NAC) }]
+================================
+Before:[l1 = 1:{ ($stack5->NAC)($stack4->NAC) }]
+After:[l1 = 1:{ ($stack5->NAC)($stack4->NAC)(l1->1) }]
+================================
+Before:[l2 = 9:{ ($stack5->NAC)($stack4->NAC)(l1->1) }]
+After:[l2 = 9:{ ($stack5->NAC)($stack4->NAC)(l1->1)(l2->9) }]
+================================
+Before:[goto [?= l3 = l1 + l2]:{ ($stack5->NAC)($stack4->NAC)(l1->1)(l2->9) }]
+After:[goto [?= l3 = l1 + l2]:{ ($stack5->NAC)($stack4->NAC)(l1->1)(l2->9) }]
+================================
+Before:[l1 = 9:{ ($stack5->NAC)($stack4->NAC) }]
+After:[l1 = 9:{ ($stack5->NAC)($stack4->NAC)(l1->9) }]
+================================
+Before:[l2 = 1:{ ($stack5->NAC)($stack4->NAC)(l1->9) }]
+After:[l2 = 1:{ ($stack5->NAC)($stack4->NAC)(l1->9)(l2->1) }]
+================================
+Before:[l3 = l1 + l2:{ ($stack5->NAC)($stack4->NAC)(l1->NAC)(l2->NAC) }]
+After:[l3 = l1 + l2:{ ($stack5->NAC)(l3->NAC)($stack4->NAC)(l1->NAC)(l2->NAC) }]
+================================
+Before:[return:{ ($stack5->NAC)(l3->NAC)($stack4->NAC)(l1->NAC)(l2->NAC) }]
+After:[return:{ ($stack5->NAC)(l3->NAC)($stack4->NAC)(l1->NAC)(l2->NAC) }]
+================================

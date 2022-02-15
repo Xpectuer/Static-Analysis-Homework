@@ -77,14 +77,14 @@ public class org.xpectuer.liveVariable.IntraLVTest extends org.xpectuer.IntraBas
     public soot.Transformer getTransformer()
     {
         org.xpectuer.liveVariable.IntraLVTest this;
-        org.xpectuer.liveVariableAnalysis.IntraLVTransformer $u0;
+        org.xpectuer.liveVariable.IntraLVTransformer $u0;
         soot.Transformer $r0;
 
         this := @this: org.xpectuer.liveVariable.IntraLVTest;
 
-        $u0 = new org.xpectuer.liveVariableAnalysis.IntraLVTransformer;
+        $u0 = new org.xpectuer.liveVariable.IntraLVTransformer;
 
-        specialinvoke $u0.<org.xpectuer.liveVariableAnalysis.IntraLVTransformer: void <init>()>();
+        specialinvoke $u0.<org.xpectuer.liveVariable.IntraLVTransformer: void <init>()>();
 
         $r0 = (soot.Transformer) $u0;
 

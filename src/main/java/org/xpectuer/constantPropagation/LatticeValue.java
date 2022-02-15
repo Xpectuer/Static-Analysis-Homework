@@ -1,11 +1,12 @@
-package org.xpectuer.ConstantPropagationAnalysis;
+package org.xpectuer.constantPropagation;
 
-import org.xpectuer.ConstantPropagationAnalysis.exceptions.SetValueException;
+import org.xpectuer.constantPropagation.exceptions.SetValueException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 class LatticeValue {
+
     static final LatticeValue undef = new LatticeValue(Integer.MAX_VALUE, State.UNDEF);
     static final LatticeValue nac = new LatticeValue(Integer.MIN_VALUE, State.NAC);
     static Map<Integer, LatticeValue> cache = new HashMap<>();
@@ -67,6 +68,7 @@ class LatticeValue {
     }
 
     public int getValue() {
+
         return this.value;
     }
 
@@ -74,5 +76,18 @@ class LatticeValue {
         if (this.state == State.NAC || this.state == State.UNDEF)
             throw new SetValueException("Cannot set value for a UNDEF or NAC state value");
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+
+        if(this.isNAC()) {
+            return "NAC";
+        } else if(this.isUNDEF()) {
+            return "UNDEF";
+        } else {
+            return Integer.toString(this.getValue());
+        }
+
     }
 }
