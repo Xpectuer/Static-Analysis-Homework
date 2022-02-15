@@ -41,9 +41,9 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
             if (lValue instanceof Local) {
                 Local defLocal = (Local) lValue;
                 soot.Value rValue = as.getRightOp();
+
                 // interpret the right expression
                 LatticeValue rAbsLatticeValue = in.computeValue(rValue);
-                if (rAbsLatticeValue == null) rAbsLatticeValue = LatticeValue.undef;
                 out.put(defLocal, rAbsLatticeValue);
             }
         }

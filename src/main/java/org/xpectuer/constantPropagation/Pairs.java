@@ -25,7 +25,7 @@ public class Pairs extends HashMap<Local, LatticeValue> {
 
     public LatticeValue computeValue(soot.Value svalue) {
         if (svalue instanceof Local) { // local 变量：寻找变量的常量值
-            return get((Local) svalue);
+            return this.getOrDefault(svalue, LatticeValue.undef);
         }
         if (svalue instanceof IntConstant) { // 整数常量（我们只处理整数常量）
             return LatticeValue.newConstant(((IntConstant) svalue).value);
