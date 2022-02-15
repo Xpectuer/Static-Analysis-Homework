@@ -1,0 +1,41 @@
+public class org.xpectuer.testcode.Test extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        org.xpectuer.testcode.Test r0;
+
+        r0 := @this: org.xpectuer.testcode.Test;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int i2, i3, $i4, i5, $i6, i7;
+        java.io.PrintStream $r0;
+        java.lang.String[] r1;
+
+        r1 := @parameter0: java.lang.String[];
+
+        i2 = 2 + 2;
+
+        i3 = 2 + 3;
+
+        $i4 = 2 + 2;
+
+        i5 = $i4 << 1;
+
+        $i6 = i2 + i3;
+
+        i7 = $i6 + i5;
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(int)>(i7);
+
+        return;
+    }
+}
