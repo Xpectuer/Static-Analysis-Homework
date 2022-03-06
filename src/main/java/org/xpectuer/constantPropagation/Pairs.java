@@ -25,7 +25,7 @@ public class Pairs extends HashMap<Local, LatticeValue> {
 
     public LatticeValue computeValue(soot.Value svalue) {
         if (svalue instanceof Local) { // local 变量：寻找变量的常量值
-            return this.getOrDefault(svalue, LatticeValue.undef);
+            return this.getOrDefault(svalue, LatticeValue.UNDEF);
         }
         if (svalue instanceof IntConstant) { // 整数常量（我们只处理整数常量）
             return LatticeValue.newConstant(((IntConstant) svalue).value);
@@ -46,8 +46,8 @@ public class Pairs extends HashMap<Local, LatticeValue> {
             // m(op2)
             LatticeValue lOp2 = computeValue(op2);
 
-            if (lOp2 == LatticeValue.nac || lOp1 == LatticeValue.nac) {
-                return LatticeValue.nac;
+            if (lOp2 == LatticeValue.NAC || lOp1 == LatticeValue.NAC) {
+                return LatticeValue.NAC;
             } else if (lOp1.isConst() && lOp2.isConst()) {
                 if (binopExpr instanceof AddExpr) {
                     return LatticeValue.newConstant(lOp1.getValue() + lOp2.getValue());
@@ -59,10 +59,10 @@ public class Pairs extends HashMap<Local, LatticeValue> {
                     return LatticeValue.newConstant(lOp1.getValue() / lOp2.getValue());
                 }
             } else {
-                return LatticeValue.undef;
+                return LatticeValue.UNDEF;
             }
         }
-        return LatticeValue.nac;
+        return LatticeValue.NAC;
     }
 }
 

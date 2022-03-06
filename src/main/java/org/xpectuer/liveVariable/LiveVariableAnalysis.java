@@ -8,6 +8,7 @@ import soot.toolkits.graph.DirectedGraph;
 import soot.toolkits.scalar.BackwardFlowAnalysis;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -16,43 +17,52 @@ import java.util.Set;
  Merge operator is union
 */
 
-public class LiveVariableAnalysis extends BackwardFlowAnalysis<Unit, Set> {
+public class LiveVariableAnalysis extends BackwardFlowAnalysis<Unit, Set<Value>> {
+
+
+
 
     public LiveVariableAnalysis(DirectedGraph<Unit> graph) {
         super(graph);
         doAnalysis();
     }
 
-    @Override
-    protected Set newInitialFlow() {
-        return new HashSet();
+    public Map<Unit,Set<Value>> getResult(){
+        return unitToAfterFlow;
     }
 
     @Override
-    protected Set entryInitialFlow() {
-        return new HashSet();
+    protected Set<Value> newInitialFlow() {
+        return new HashSet<>();
+    }
+
+    @Override
+    protected Set<Value> entryInitialFlow() {
+        return new HashSet<>();
     }
 
     // merge joins two IN sets to make a OUT set
     @Override
-    protected void merge(Set src1, Set src2, Set dest) {
+    protected void merge(Set<Value> src1, Set<Value> src2, Set<Value> dest) {
         dest.clear();
         dest.addAll(src1);
         dest.addAll(src2);
-
     }
 
 
     // copy() brings IN set to OUT set
     @Override
-    protected void copy(Set src, Set dest) {
+    protected void copy(Set<Value> src, Set<Value> dest) {
         dest.clear();
         dest.addAll(src);
     }
 
     @Override
-    protected void flowThrough(Set srcValue, Unit ut, Set destValue) {
+    protected void flowThrough(Set<Value> srcValue, Unit ut, Set<Value> destValue) {
         // take out kill set
+        // System.out.println("===INPROC====");
+
+        // System.out.println(ut);
         for(ValueBox box : ut.getDefBoxes()) {
             Value value = box.getValue();
             if(value instanceof Local) destValue.remove(value);

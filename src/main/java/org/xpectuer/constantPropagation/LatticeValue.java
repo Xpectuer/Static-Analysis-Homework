@@ -1,18 +1,27 @@
 package org.xpectuer.constantPropagation;
 
-import org.xpectuer.constantPropagation.exceptions.SetValueException;
-
 import java.util.HashMap;
 import java.util.Map;
 
-class LatticeValue {
+public class LatticeValue {
 
-    static final LatticeValue undef = new LatticeValue(Integer.MAX_VALUE, State.UNDEF);
-    static final LatticeValue nac = new LatticeValue(Integer.MIN_VALUE, State.NAC);
+    static final LatticeValue UNDEF = new LatticeValue(Integer.MAX_VALUE, State.UNDEF) {
+        @Override
+        public int hashCode() {
+            return Integer.MAX_VALUE;
+        }
+    };
+    static final LatticeValue NAC = new LatticeValue(Integer.MIN_VALUE, State.NAC) {
+        @Override
+        public int hashCode() {
+            return Integer.MIN_VALUE;
+        }
+    };
+
     static Map<Integer, LatticeValue> cache = new HashMap<>();
     // UNDEF or NAC holds no value
     private final State state;
-    private int value;
+    private final int value;
 
     public LatticeValue(int value, State state) {
         this.state = state;
@@ -38,19 +47,19 @@ class LatticeValue {
     public LatticeValue meet(LatticeValue op2) {
         LatticeValue op1 = this;
         // NAC meets v = NAC
-        if (op1.state == State.NAC) return op1;
-        if (op2.state == State.NAC) return op2;
+        if (op1.isNAC()) return op1;
+        else if (op2.isNAC()) return op2;
 
-        //UNDEF meets v = v
-        if (op1.state == State.UNDEF) return op2;
-        if (op2.state == State.UNDEF) return op1;
+            //UNDEF meets v = v
+        else if (op1.isUNDEF()) return op2;
+        else if (op2.isUNDEF()) return op1;
 
-        //CONSTANT meets v
-        // neither op1 nor op2 can be UNDEF or NAC
-        if (op1.getValue() == op2.getValue()) {
+            //CONSTANT meets v
+            // neither op1 nor op2 can be UNDEF or NAC
+        else if (op1.getValue() == op2.getValue()) {
             return op1;
         } else {
-            return LatticeValue.nac;
+            return LatticeValue.NAC;
         }
 
     }
@@ -68,22 +77,15 @@ class LatticeValue {
     }
 
     public int getValue() {
-
         return this.value;
-    }
-
-    public void setValue(int value) throws SetValueException {
-        if (this.state == State.NAC || this.state == State.UNDEF)
-            throw new SetValueException("Cannot set value for a UNDEF or NAC state value");
-        this.value = value;
     }
 
     @Override
     public String toString() {
 
-        if(this.isNAC()) {
+        if (this.isNAC()) {
             return "NAC";
-        } else if(this.isUNDEF()) {
+        } else if (this.isUNDEF()) {
             return "UNDEF";
         } else {
             return Integer.toString(this.getValue());

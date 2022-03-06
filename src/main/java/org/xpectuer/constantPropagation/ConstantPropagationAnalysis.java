@@ -3,11 +3,12 @@ package org.xpectuer.constantPropagation;
 import soot.Local;
 import soot.Unit;
 import soot.jimple.AssignStmt;
-import soot.toolkits.graph.DirectedGraph;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.ForwardFlowAnalysis;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs> {
@@ -17,7 +18,10 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
         doAnalysis();
     }
 
-    //TODO：before和after一样了
+
+    public Map<Unit,Pairs> getResult() {
+       return unitToAfterFlow;
+    }
 
     // make output readable
     @Override
@@ -27,8 +31,8 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
     }
 
     @Override
-    public Pairs getFlowBefore(Unit s) {
-        Pairs pairs = unitToBeforeFlow.get(s);
+    public Pairs getFlowBefore(Unit statement) {
+        Pairs pairs = unitToBeforeFlow.get(statement);
         return pairs == null ? newInitialFlow() : pairs;
     }
 
@@ -59,13 +63,13 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
 
         Set<Local> seen = new HashSet<>();
         src1.forEach((k, v) -> {
-            dest.put(k, v.meet(src2.getOrDefault(k, LatticeValue.undef)));
+            dest.put(k, v.meet(src2.getOrDefault(k, LatticeValue.UNDEF)));
             seen.add(k);
         });
 
         src2.forEach((k, v) -> {
             if (!seen.contains(k)) {
-                dest.put(k, v.meet(src1.getOrDefault(k, LatticeValue.undef)));
+                dest.put(k, v.meet(src1.getOrDefault(k, LatticeValue.UNDEF)));
             }
         });
 
@@ -76,6 +80,8 @@ public class ConstantPropagationAnalysis extends ForwardFlowAnalysis<Unit, Pairs
         dest.clear();
         dest.putAll(src);
     }
+
+
 
 
 }
