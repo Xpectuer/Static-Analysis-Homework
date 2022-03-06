@@ -5,7 +5,7 @@
 ## Analysis 
 - [x] Live Variable 
 - [x] Constant Propagation
-- [x] Dead Code Detection 
+- [x] mini Dead Code Detection (just for Integer testing) 
 - [ ] Inter-procedure Constant Propagation via CHA
 
 ## Miscs
