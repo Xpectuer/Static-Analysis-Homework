@@ -191,8 +191,8 @@ public class IntraDeadCodeDetect extends BodyTransformer {
     private boolean is_End(Unit stmt) {
         return (stmt instanceof ReturnStmt ||
                 stmt instanceof GotoStmt ||
-                //stmt instanceof RetStmt ||
-                //stmt instanceof ReturnVoidStmt ||
+                // stmt instanceof RetStmt ||
+                // stmt instanceof ReturnVoidStmt ||
                 stmt instanceof BreakStmt ||
                 stmt instanceof IfStmt ||
                 stmt instanceof SwitchStmt
