@@ -4,6 +4,7 @@ package org.xpectuer.deadCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xpectuer.constantPropagation.ConstantPropagationAnalysis;
+import org.xpectuer.constantPropagation.LatticeValue;
 import org.xpectuer.constantPropagation.Pairs;
 import org.xpectuer.liveVariable.LiveVariableAnalysis;
 import soot.*;
@@ -87,7 +88,10 @@ public class IntraDeadCodeDetect extends BodyTransformer {
                         // ---parse ope1---
                         if (ope1 instanceof Local) {
                             // TODO: may cause bug???
-                            is_const1 = pairs.get(ope1).isConst();
+                            Optional<LatticeValue>  found1 = Optional.ofNullable(pairs.get(ope1));
+                            if(found1.isPresent()) {
+                                is_const1 = found1.get().isConst();
+                            }
                             if (is_const1) {
                                 v1 = pairs.get(ope1).getValue();
                             }
@@ -100,7 +104,10 @@ public class IntraDeadCodeDetect extends BodyTransformer {
 
                         // ---parse ope2---
                         if (ope2 instanceof Local) {
-                            is_const2 = !(pairs.get(ope2).isNAC() || pairs.get(ope2).isUNDEF());
+                            Optional<LatticeValue>  found2 = Optional.ofNullable(pairs.get(ope2));
+                            if(found2.isPresent()) {
+                                is_const2 = found2.get().isConst();
+                            }
                             if (is_const2) {
                                 v1 = pairs.get(ope2).getValue();
                             }
@@ -142,6 +149,10 @@ public class IntraDeadCodeDetect extends BodyTransformer {
                             dq.addLast(switchStmt.getTarget(c));
                         }
                     }
+                } else if(first instanceof GotoStmt) {
+                    GotoStmt gotoStmt = (GotoStmt) first;
+                    dq.addLast(gotoStmt.getTarget());
+                    certain = true;
                 }
 
                 if (!certain) { // not a branching or ending
@@ -190,12 +201,9 @@ public class IntraDeadCodeDetect extends BodyTransformer {
 
     private boolean is_End(Unit stmt) {
         return (stmt instanceof ReturnStmt ||
-                stmt instanceof GotoStmt ||
                 // stmt instanceof RetStmt ||
                 // stmt instanceof ReturnVoidStmt ||
-                stmt instanceof BreakStmt ||
-                stmt instanceof IfStmt ||
-                stmt instanceof SwitchStmt
+                stmt instanceof BreakStmt
 
         );
     }
@@ -241,9 +249,7 @@ public class IntraDeadCodeDetect extends BodyTransformer {
         return dead_codes_lines;
     }
 
-    public Set<Unit> getResults() {
-        return dead_codes;
-    }
+    public Set<Unit> getResults() { return dead_codes;}
 
 
     private Set<Unit> getTrap(Body body) {

@@ -5,19 +5,22 @@ package constantPorpagation;
  */
 public class IntraCPTest {
 
-    public void nonDistributiveTest() {
+    public int nonDistributiveTest(int k) {
         int a;
         int b;
         a = 2;
         b = 0;
-        if (Math.random() > 0.5 && a > 0) {
+        if (Math.random() > 0.5 && k > 0) {
             a = 1;
             b = 9;
-        } else if(b > 0) {
+        } else if(k == 0) {
             a = 9;
             b = 1;
+        } else {
+            b = 8;
         }
         int c = a + b;
+        return c;
     }
 
     public void sameValueMeetTest() {
